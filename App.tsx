@@ -1,132 +1,76 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import React, {useEffect} from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {Image, StyleSheet, View} from 'react-native';
+import {RootStacksProp} from './PageStacks';
+import StagePage from './src/screens/StagePage';
 import {useStore} from './useStore';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
+const Tab = createBottomTabNavigator();
+interface AppProps {
+  navigation: RootStacksProp;
 }
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  const {bears, increase} = useStore();
+const App: React.FC<AppProps> = props => {
+  const {theme} = useStore();
 
   useEffect(() => {
-    console.log(`useStore bears: ${bears}`);
     return function () {};
   }, []);
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <TouchableOpacity
-            onPress={() => {
-              increase(1);
-            }}>
-            <Text style={{}}>{`useStore bears: ${bears}`}</Text>
-          </TouchableOpacity>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <View
+      style={{
+        flex: 1,
+      }}>
+      <Tab.Navigator
+        screenOptions={({route}) => ({
+          headerShadowVisible: true,
+          headerShown: false,
+          tabBarIcon: ({focused, color, size}) => {
+            let icon = {
+              Home: require('@src/images/menu/earth.png'),
+              Bill: require('@src/images/menu/note.png'),
+              My: require('@src/images/menu/talk.png'),
+            }[route.name];
+
+            return (
+              <Image
+                source={icon}
+                style={{height: size, width: size, tintColor: color}}
+              />
+            );
+          },
+          tabBarActiveTintColor: theme,
+          tabBarInactiveTintColor: 'gray',
+        })}>
+        <Tab.Screen
+          name={'Home'}
+          component={StagePage}
+          options={{tabBarLabel: '首页'}}
+        />
+        <Tab.Screen
+          name={'Bill'}
+          component={StagePage}
+          options={{tabBarLabel: '账单'}}
+        />
+        <Tab.Screen
+          name={'My'}
+          component={StagePage}
+          options={{tabBarLabel: '我的'}}
+        />
+      </Tab.Navigator>
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  viewTabBarStyle: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 12,
+    borderRadius: 12,
   },
 });
 

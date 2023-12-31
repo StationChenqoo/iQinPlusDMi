@@ -5,6 +5,8 @@ import {createJSONStorage, devtools, persist} from 'zustand/middleware';
 interface States {
   bears: number;
   increase: (by: number) => void;
+  theme: string;
+  setTheme: (theme: string) => void;
 }
 
 const useStore = create<States>()(
@@ -13,6 +15,8 @@ const useStore = create<States>()(
       set => ({
         bears: 0,
         increase: by => set(state => ({bears: state.bears + by})),
+        theme: '#987123',
+        setTheme: theme => set({theme}),
       }),
       {
         storage: createJSONStorage(() => AsyncStorage),
