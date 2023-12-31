@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -13,6 +13,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  TouchableOpacity,
   useColorScheme,
   View,
 } from 'react-native';
@@ -24,6 +25,7 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import {useStore} from './useStore';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -62,6 +64,13 @@ function App(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const {bears, increase} = useStore();
+
+  useEffect(() => {
+    console.log(`useStore bears: ${bears}`);
+    return function () {};
+  }, []);
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -76,6 +85,12 @@ function App(): React.JSX.Element {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
+          <TouchableOpacity
+            onPress={() => {
+              increase(1);
+            }}>
+            <Text style={{}}>{`useStore bears: ${bears}`}</Text>
+          </TouchableOpacity>
           <Section title="Step One">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
             screen and then come back to see your edits.
