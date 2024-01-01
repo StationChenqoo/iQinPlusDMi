@@ -5,6 +5,7 @@ import {Image, StyleSheet, View} from 'react-native';
 import {RootStacksProp} from './PageStacks';
 import StagePage from './src/screens/StagePage';
 import {useStore} from './useStore';
+import EditBill from '@src/screens/EditBill';
 
 const Tab = createBottomTabNavigator();
 interface AppProps {
@@ -46,7 +47,7 @@ const App: React.FC<AppProps> = props => {
         })}>
         <Tab.Screen
           name={'Home'}
-          component={StagePage}
+          component={EditBill}
           options={{tabBarLabel: '首页'}}
         />
         <Tab.Screen

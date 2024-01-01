@@ -2,7 +2,7 @@
  * @format
  */
 
-import {AppRegistry} from 'react-native';
+import {AppRegistry, View} from 'react-native';
 import App from './App';
 import {name as appName} from './app.json';
 import {createStore} from 'zustand';
@@ -15,7 +15,9 @@ const StoreContext = createContext();
 const iQinPlusDMi = () => {
   return (
     <StoreContext.Provider value={useStore}>
-      <Stacks />
+      <View style={{flex: 1}}>
+        <Stacks />
+      </View>
     </StoreContext.Provider>
   );
 };
