@@ -17,12 +17,12 @@ import {
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 interface MyProps {
-  item: PayoutReason;
+  id: string;
   onItemPress: (item: PayoutReason) => void;
 }
 
 const PayoutSelectorView: React.FC<MyProps> = props => {
-  const {item, onItemPress} = props;
+  const {id, onItemPress} = props;
   const {theme} = useStore();
 
   return (
@@ -38,21 +38,21 @@ const PayoutSelectorView: React.FC<MyProps> = props => {
             <View
               style={[
                 styles.viewItem,
-                {borderColor: item?.id == it.id ? theme : 'transparent'},
+                {borderColor: id == it.id ? theme : 'transparent'},
               ]}>
               <Image
                 source={it.icon}
                 style={{
                   height: useDip(28),
                   width: useDip(28),
-                  tintColor: item?.id == it.id ? theme : '#999',
+                  tintColor: id == it.id ? theme : '#999',
                 }}
               />
               <View style={{height: 5}} />
               <Text
                 style={[
                   styles.textItem,
-                  {color: item?.id == it.id ? theme : '#666'},
+                  {color: id == it.id ? theme : '#666'},
                 ]}>
                 {it.name}
               </Text>

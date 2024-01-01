@@ -1,22 +1,31 @@
 import React from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  KeyboardTypeOptions,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 
 interface MyProps {
-  amount: number | string;
+  title: string;
+  value: number | string;
+  keyboardType?: KeyboardTypeOptions;
+  placeholder: string;
   onChange: (amount: string | number) => void;
 }
 
-const AmountEditor: React.FC<MyProps> = props => {
-  const {amount, onChange} = props;
+const NumberEditor: React.FC<MyProps> = props => {
+  const {title, value, onChange, placeholder} = props;
 
   return (
     <View style={styles.view}>
-      <Text style={{fontSize: 16, color: '#333'}}>金额</Text>
+      <Text style={{fontSize: 16, color: '#333'}}>{title}</Text>
       <TextInput
-        placeholder={'请输入金额'}
+        placeholder={placeholder}
         style={{fontSize: 16, textAlign: 'right'}}
         keyboardType={'numeric'}
-        value={amount + ''}
+        value={value + ''}
         onChangeText={text => {
           const filterAndReturnPositiveInt = (inputString: string) => {
             // 使用正则表达式过滤掉除了0~9以外的任何字符
@@ -57,4 +66,4 @@ const styles = StyleSheet.create({
     color: '#666',
   },
 });
-export default AmountEditor;
+export default NumberEditor;
