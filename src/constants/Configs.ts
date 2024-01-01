@@ -45,6 +45,11 @@ const PayoutReasons: PayoutReason[] = [
     name: '保险',
     icon: require('@src/images/payout/INSURANCE.png'),
   },
+  {
+    id: 'BUY_CAR',
+    name: '购车',
+    icon: require('@src/images/payout/BUY_CAR.png'),
+  },
   {id: 'OTHERS', name: '其他', icon: require('@src/images/payout/OTHERS.png')},
 ];
 

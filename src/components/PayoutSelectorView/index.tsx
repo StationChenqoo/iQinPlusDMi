@@ -27,8 +27,8 @@ const PayoutSelectorView: React.FC<MyProps> = props => {
 
   return (
     <View style={styles.views}>
-      {[...PayoutReasons, Object.create(null)].map((it, index) => {
-        return it?.id ? (
+      {[...PayoutReasons].map((it, index) => {
+        return (
           <TouchableOpacity
             key={index}
             activeOpacity={0.88}
@@ -46,6 +46,7 @@ const PayoutSelectorView: React.FC<MyProps> = props => {
                   height: useDip(28),
                   width: useDip(28),
                   tintColor: id == it.id ? theme : '#999',
+                  resizeMode: 'stretch',
                 }}
               />
               <View style={{height: 5}} />
@@ -58,8 +59,6 @@ const PayoutSelectorView: React.FC<MyProps> = props => {
               </Text>
             </View>
           </TouchableOpacity>
-        ) : (
-          <View style={styles.viewItem} key={index} />
         );
       })}
     </View>
